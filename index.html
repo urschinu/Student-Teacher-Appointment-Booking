@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <title>Student-Teacher Booking Appointment Engine</title>
+</head>
+
+<body>
+    <script>
+        $(document).ready(function () {
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+        });
+
+        function login(event) {
+            event.preventDefault();
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Successfully signed in
+                    console.log("User signed in:", userCredential.user);
+                    // Redirect or perform other actions as needed
+                    window.location.href = "./admin/adminPage.html";
+                })
+                .catch((error) => {
+                    // Handle errors here
+                    console.error("Error signing in:", error.message);
+                    // You can show an error message to the user
+                    alert("Invalid username or password. Please try again.");
+                });
+        }
+    </script>
+
+    <div id="header"></div>
+    <div class="section">
+    
+        <div class="form-box">
+            <div class="button-box">
+                <div id="btn">
+                    <button id="adminlogin_btn" type="button" class="toggle-btn">Admin</button>
+                    <button id="teacherlogin_btn" type="button" class="toggle-btn">Teacher</button>
+                    <button id="studentlogin_btn" type="button" class="toggle-btn">Student</button>
+                </div>
+                <form class="input-group" id="login" onsubmit="login(event)">
+                    <input type="text" id="email" class="input-field" placeholder="E-Mail" required>
+                    <input type="password" id="password" class="input-field" placeholder="Enter password" required>
+                    <input type="checkbox" class="check-box"><span>Remember Password</span>
+                    <button type="submit" id="loginbtn" class="submit-btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+
+    <script>
+        function login(event) {
+          event.preventDefault();
+          var email = document.getElementById("email").value;
+          var password = document.getElementById("password").value;
+    
+          if (email === "admin" && password === "password") {
+            window.location.href = "./admin/adminPage.html";
+          } else {
+            alert("Invalid username or password. Please try again.");
+          }
+        }
+      </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKicRv4tL3F9FaBlS5dI2OxpZz8MnMCOE",
+            authDomain: "studentteacher-9ddf9.firebaseapp.com",
+            databaseURL: "https://studentteacher-9ddf9-default-rtdb.firebaseio.com",
+            projectId: "studentteacher-9ddf9",
+            storageBucket: "studentteacher-9ddf9.appspot.com",
+            messagingSenderId: "92631679503",
+            appId: "1:92631679503:web:1717c8e8d7f96edea3197a"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        loginbtn.addEventListener('click', (e) => {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    // ...
+                    window.location.href = "./admin/adminPage.html";
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert('wrong email/password');
+                });
+        })
+
+
+        teacherlogin_btn.addEventListener('click', (e) => {
+            window.location.href = "./teacher/teacherLoginpage.html"; 
+        })
+
+        studentlogin_btn.addEventListener('click', (e) => {
+            window.location.href = "./student/studentLoginPage.html"; 
+        })
+    </script>
+  
+
+</body>
+
+</html>
